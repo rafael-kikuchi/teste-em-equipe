@@ -2,10 +2,10 @@
     <div class="buscar-pais">
         <div class="pesquisa">
             <input type="text" name="pais" id="pais" placeholder="Pesquise aqui o país">
-            <button>Pesquisar</button>
+            <button @click="pesquisarPais()">Pesquisar</button>
         </div>
         
-        <table>
+        <table v-if="pais">
             <tr>
                 <th>País</th>
                 <td>{{pais.country}}</td>
@@ -55,6 +55,8 @@
                 <td>{{pais.testsPerOneMillion}}</td>
             </tr>
         </table>
+        <p v-else>País não selecionado!</p>
+        <p v-if="pais">{{JSON.stringify(pais)}}</p>
     </div>
 </template>
 <script>
@@ -62,20 +64,20 @@ export default {
     name: 'BuscarPais',
     data(){
         return{
-            pais: {
-                country: "Brazil",
-                cases: 21445651,
-                todayCases: 18578,
-                deaths: 597255, 
-                todayDeaths: 455,
-                recovered: 20425139,
-                active: 423257,
-                critical: 8318,
-                casesPerOneMillion: 100007,
-                deathsPerOneMillion: 2785,
-                totalTests: 57282520,
-                testsPerOneMillion: 267124
-            }
+            url: 'https://coronavirus-19-api.herokuapp.com/countries',
+            pais: null
+        }
+    },
+    methods: {
+        pesquisarPais(){
+            let nomePais = document.getElementById('pais').value;
+            fetch(`${this.url}/${nomePais}`)
+                .then(data => data.json())
+                .then(json => this.pais = json)
+                .catch(error => {
+                    this.pais = null;
+                    console.log(error);
+                });
         }
     }
 }
