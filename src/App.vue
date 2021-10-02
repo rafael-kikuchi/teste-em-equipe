@@ -1,18 +1,19 @@
 <template>
-  <div id="app">
-    <BuscarPais/>
-  </div>
+  <v-app>
+    <v-main>
+      <BuscarPais/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import BuscarPais from './components/BuscarPais.vue'
-
-export default {
-  name: 'App',
-  components: {
-    BuscarPais
+  import BuscarPais from './components/BuscarPais'
+  export default {
+    name: 'App',
+    components: {
+      BuscarPais
+    }
   }
-}
 </script>
 
 <style>
@@ -21,4 +22,3 @@ export default {
     padding: 0;
     box-sizing: border-box;
   }
-</style>
